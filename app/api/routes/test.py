@@ -13,3 +13,7 @@ def read_article(article_id: int):
 @router.get("/items/{item_id}")
 def read_item(item_id: int, q: Union[str, None] = None):
     return {"item_id": item_id, "q": q}
+
+@router.post("/article/")
+def create_article(name: str, description: str, price: float):
+    return {"name": name, "description": description, "price": price}
