@@ -1,0 +1,11 @@
+version: '3'
+services:
+    fast_api_app_compose:
+        image: fast_api_app
+        ports:
+            - "8000:8000"
+        volumes:
+            - .:/code
+        environment:
+            - ENV=development
+        
