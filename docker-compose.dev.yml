@@ -1,5 +1,6 @@
 version: '3'
 services:
+    # FastAPI service
     fast_api_app_compose:
         image: fast_api_app
         ports:
@@ -8,4 +9,24 @@ services:
             - .:/code
         environment:
             - ENV=development
-        
+        depends_on:
+            - postgres
+    # Postgres service
+    postgres:
+        image: postgres:13
+        environment:
+            POSTGRES_USER: postgres
+            POSTGRES_PASSWORD: postgres
+            POSTGRES_DB: postgres
+        ports:
+            - "5432:5432"
+    # pgAdmin service
+    pgadmin:
+        image: dpage/pgadmin4
+        environment:
+            PGADMIN_DEFAULT_EMAIL: default@email.com
+            PGADMIN_DEFAULT_PASSWORD: admin
+        ports:
+            - "5050:80"
+        depends_on:
+            - postgres
