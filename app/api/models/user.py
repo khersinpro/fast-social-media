@@ -9,6 +9,7 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     email = Column(String, unique=True, index=True, nullable=False)
+    username = Column(String, unique=True, index=True, nullable=False)
     password = Column(String)
     firstname = Column(String, nullable=False)
     lastname = Column(String, nullable=False)  
@@ -40,6 +41,7 @@ class User(Base):
     
     __table_args__ = (
         UniqueConstraint('email', name='unique_email'),
+        UniqueConstraint('username', name='unique_username'),
     )
 
     
