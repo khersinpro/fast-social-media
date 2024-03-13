@@ -9,6 +9,8 @@ services:
             - .:/code
         environment:
             - ENV=development
+            - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/postgres
+            - SECRET_KEY=51bc49c1b96f286c39b2ef7fbab6885ac993332d6ee17940d213dc0d02283c82
         depends_on:
             - postgres
     # Postgres service

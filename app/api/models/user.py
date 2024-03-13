@@ -1,6 +1,8 @@
-from sqlalchemy import Column, String, Integer, UniqueConstraint
+from sqlalchemy import Column, String, Integer, UniqueConstraint, ForeignKey
+from sqlalchemy.orm import relationship
 from app.database import Base
 from passlib.context import CryptContext
+
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -13,6 +15,10 @@ class User(Base):
     password = Column(String)
     firstname = Column(String, nullable=False)
     lastname = Column(String, nullable=False)  
+
+    # Association with the Role model
+    role_name = Column(String, ForeignKey('role.name'), nullable=False, default="ROLE_USER")
+    role = relationship("Role", backref="users")
 
     def verify_password(self, plain_password: str) -> bool:
         """
@@ -38,10 +44,4 @@ class User(Base):
                 str: The hashed password
         """
         return pwd_context.hash(password)
-    
-    __table_args__ = (
-        UniqueConstraint('email', name='unique_email'),
-        UniqueConstraint('username', name='unique_username'),
-    )
-
     

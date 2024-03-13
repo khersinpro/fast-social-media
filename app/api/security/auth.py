@@ -7,14 +7,21 @@ from sqlalchemy.orm import Session
 from app.api.models.user import User
 from app.depenencies import get_db
 from app.api.schemas.token import Token, TokenData
+from dotenv import load_dotenv
+import os
 
-SECRET_KEY = "51bc49c1b96f286c39b2ef7fbab6885ac993332d6ee17940d213dc0d02283c82"
+load_dotenv()
+
+SECRET_KEY = os.getenv("SECRET_KEY")
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 30
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/api/users/login")
 
 class JWTAuthenticator:
+    """
+    JWT Authenticator
+    """
     def __init__(self, secret_key: str, algorithm: str, access_token_expire_minutes: int):
         self.secret_key = secret_key
         self.algorithm = algorithm
@@ -41,6 +48,11 @@ class JWTAuthenticator:
         """
         Authenticate the user
 
+        args:
+        - username: str - username
+        - password: str - password
+        - db: Session - database session
+
         return:
         - User instance if authentication successful, None otherwise
         """
@@ -52,6 +64,13 @@ class JWTAuthenticator:
     def get_current_user(self, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)) -> User:
         """
         Get the current user
+
+        args:
+        - db: Session - database session
+        - token: str - jwt token
+
+        return:
+        - User instance
         """
         credentials_exception = HTTPException(
             status_code=401,

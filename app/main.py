@@ -2,14 +2,15 @@ from typing import Union
 from fastapi import FastAPI
 from app.api.main import router as api_router 
 from sqlalchemy.orm import Session
-from app.database import SessionLocal, engine
+from app.database import Base, engine
 
 #import all models from folder models
 from app.api.models import user
+from app.api.models import role
 
 # Create all tables in the database
 def create_tables():
-    user.Base.metadata.create_all(bind=engine)
+    Base.metadata.create_all(bind=engine)
 
 create_tables()
 
