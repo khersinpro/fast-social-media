@@ -8,7 +8,7 @@ This repository contains a Fast API application with Docker, Docker Compose, and
 
 2. Clone this repository:
     ```bash
-    git clone https://github.com/your_username/fast-api-app.git
+    git clone https://github.com/khersinpro/fast-social-media
     cd fast-api-app
     ```
 
