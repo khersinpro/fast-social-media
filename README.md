@@ -2,6 +2,14 @@
 
 This repository contains a Fast API application with Docker, Docker Compose, and Alembic for managing database migrations.
 
+## Features
+
+- **User Management**: Easily create, update, and delete user accounts.
+- **Post Management**: Allow users to create, edit, and delete posts.
+- **Comment System**: Enable users to leave comments on posts.
+- **Like Functionality**: Implement a feature for users to like posts.
+- **OAuth Token Security**: Ensure secure access to API endpoints using OAuth tokens.
+
 ## Installation
 
 1. Make sure Docker is installed and running on your system.
@@ -26,7 +34,7 @@ This repository contains a Fast API application with Docker, Docker Compose, and
     ```bash
     alembic upgrade head
     ```
-    
+
 ## Usage
 Once the containers are started, you can access the Fast API application at the following address: `http://localhost:8000`
 
