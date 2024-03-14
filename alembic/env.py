@@ -11,6 +11,9 @@ from app.database import Base
 # Import all your models here
 from app.api.models import user
 from app.api.models import role
+from app.api.models import post
+from app.api.models import comment
+from app.api.models import like
 
 # this is the Alembic Config object, which provides
 # access to the values within the .ini file in use.

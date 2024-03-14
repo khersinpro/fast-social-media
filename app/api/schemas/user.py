@@ -1,9 +1,9 @@
-from typing import List, Union
-from pydantic import BaseModel
+from typing import Union
+from pydantic import BaseModel, EmailStr
 
 class UserBase(BaseModel):
-    email: str
-    username: str
+    email: EmailStr
+    username: str 
     firstname: str
     lastname: str
 
@@ -12,6 +12,7 @@ class UserCreate(UserBase):
 
 class UserRead(UserBase):
     id: int
+    role_name: str
     # Config class is used to configure the behavior of the Pydantic model.
     class Config:
         orm_mode = True

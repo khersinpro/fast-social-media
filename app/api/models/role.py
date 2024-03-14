@@ -1,4 +1,4 @@
-from sqlalchemy import Column, String, Integer, UniqueConstraint
+from sqlalchemy import Column, String
 from app.database import Base
 
 

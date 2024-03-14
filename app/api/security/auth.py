@@ -89,5 +89,36 @@ class JWTAuthenticator:
         if user is None:
             raise credentials_exception
         return user
+    
+    def get_current_admin_user(self, db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)) -> User:
+        """
+        Get the current admin user
+
+        args:
+        - db: Session - database session
+        - token: str - jwt token
+
+        return:
+        - User instance
+        """
+        credentials_exception = HTTPException(
+            status_code=401,
+            detail="Could not validate credentials",
+            headers={"WWW-Authenticate": "Bearer"},
+        )
+        try:
+            payload = jwt.decode(token, self.secret_key, algorithms=[self.algorithm])
+            username: str = payload.get("sub")
+            if username is None:
+                raise credentials_exception
+            token_data = TokenData(username=username)
+        except JWTError as err:
+            raise credentials_exception
+        user = db.query(User).filter(User.username == token_data.username).first()
+        print(user.role_name)
+        if user is None or user.role_name != "ROLE_ADMIN":
+            credentials_exception.detail = "You don't have permission to access this resource"
+            raise credentials_exception
+        return user
 
 jwt_authenticator = JWTAuthenticator(SECRET_KEY, ALGORITHM, ACCESS_TOKEN_EXPIRE_MINUTES)

@@ -4,11 +4,10 @@ from typing import List
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import IntegrityError
 from app.api.schemas.user import UserCreate, UserRead, UserUpdate
+from app.api.schemas.token import Token
 from app.api.models.user import User
 from app.depenencies import get_db
-from app.api.security.auth import jwt_authenticator
-from app.api.schemas.token import Token
-
+from app.api.security.auth import jwt_authenticator 
 router = APIRouter()
 
 # Login route
@@ -61,6 +60,7 @@ def create_user(user: UserCreate, db: Session = Depends(get_db)) -> User:
         db.refresh(db_user)
         return db_user
     except IntegrityError as err:
+        print(err)
         raise HTTPException(status_code=400, detail=f'User with email {user.email} already exists')
     except Exception as e:
         print(e)
